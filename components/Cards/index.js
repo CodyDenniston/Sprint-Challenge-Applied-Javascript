@@ -1,36 +1,36 @@
-const cards = document.querySelector( '.cards-container' );
+const cardContainer = document.querySelector( '.cards-container' );
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then( response => {
          res = Object.values( response.data.articles );
-         res.forEach( el => {
-            el.forEach( e => {
-                cards.appendChild( CreateCard( e ) );
+         res.forEach( element => {
+            element.forEach( article => {
+                cardContainer.appendChild( CreateCard( article ) );
             });
          });
     })
-    .catch( error => { consols.log(`Error: ${error}`) });
+    .catch( error => { console.log(`Error: ${error}`) });
 
-const CreateCard = ( obj ) => {
+const CreateCard = ( item ) => {
     const card = document.createElement( 'div'  );
-    const head = document.createElement( 'div'  );
-    const auth = document.createElement( 'div'  );
-    const cont = document.createElement( 'div'  );
+    const headline = document.createElement( 'div'  );
+    const author = document.createElement( 'div'  );
+    const container = document.createElement( 'div'  );
     const img  = document.createElement( 'img'  );
     const by   = document.createElement( 'span' );
 
     card.classList.add( 'card'          );
-    head.classList.add( 'headline'      );
-    auth.classList.add( 'author'        );
-    cont.classList.add( 'img-container' );
+    headline.classList.add( 'headline'      );
+    author.classList.add( 'author'        );
+    container.classList.add( 'img-container' );
 
-    head.textContent = obj.headline;
-    by.textContent   = `By ${ obj.authorName }`;
-    img.setAttribute( 'src', obj.authorPhoto );
-    
+    headline.textContent = item.headline;
+    by.textContent   = `By ${ item.authorName }`;
+    img.setAttribute( 'src', item.authorPhoto );
+
     card.appendChild( head );
     card.appendChild( auth );
-    auth.appendChild( cont );
-    cont.appendChild( img  );
-    auth.appendChild( by   );
+    author.appendChild( cont );
+    container.appendChild( img  );
+    author.appendChild( by   );
     return card;
 };
